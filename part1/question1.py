@@ -14,51 +14,56 @@
 # Read the test suite to know the values that these functions should return.
 
 def get_city_temperature(city):
-   if city == "Quito":
-      return 22
-   if city == "Sao Paulo":
-      return 17
-   if city == "San Francisco":
-      return 16
+    """
+    Get the current temperature of a given city.
+
+    Args:
+        city (str): The name of the city for which you want to obtain the temperature.
+
+    Returns:
+        int: The current temperature in degrees Celsius for the city. If the city is unknown, it returns "unknown city".
+
+    Example:
+        >>> get_city_temperature("Quito")
+        22
+    """
+    if city == "Quito":
+        return 22
+    if city == "Sao Paulo":
+        return 17
+    if city == "San Francisco":
+        return 16
+    if city == "New York":
+        return 14
+    else:
+        return "unknown city"
 
 def get_city_weather(city):
+    """
+    Get the current weather condition of a given city.
 
-  sky_condition = None
+    Args:
+        city (str): The name of the city for which you want to obtain the weather condition.
 
-  if city == "Sao Paulo":
-     sky_condition = "cloudy"
-  elif city == "New York":
-     sky_condition = "rainy"
+    Returns:
+        str: A string describing the current weather condition and temperature in the city.
+        If the city is unknown, it returns "Unknown city".
 
-  temperature = get_city_temperature(city)
+    Example:
+        >>> get_city_weather("Quito")
+        '22 degrees and sunny'
+    """
+    sky_condition = None
 
-  return str(temperature) + " degrees and " + sky_condition
-  
-  def get_city_temperature(city):
-   if city == "Quito":
-      return 22
-   if city == "Sao Paulo":
-      return 17
-   if city == "San Francisco":
-      return 16
-   if city == "New York":
-      return 14
-   else: 
-      return "ciudad desconocida"
+    if city == "Sao Paulo":
+        sky_condition = "cloudy"
+    elif city == "New York":
+        sky_condition = "rainy"
+    elif city == "Quito":
+        sky_condition = "sunny"
+    else:
+        return "Unknown city"
 
-def get_city_weather(city):
+    temperature = get_city_temperature(city)
 
-   sky_condition = "unknow"
-
-   if city == "Sao Paulo":
-     sky_condition = "cloudy"
-   elif city == "New York":
-     sky_condition = "rainy"
-   elif city == "Quito":
-      sky_condition = "sunny"
-   else:
-      return "Unknown city" 
-
-   temperature = get_city_temperature(city)
-
-   return f"{temperature} degrees and {sky_condition}"
+    return str(temperature) + " degrees and " + sky_condition

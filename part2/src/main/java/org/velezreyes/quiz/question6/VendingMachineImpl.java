@@ -1,59 +1,67 @@
 package org.velezreyes.quiz.question6;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-public class VendingMachineImpl {
-	public static VendingMachine getInstance() {
-	    return new MyVendingMachine();
-	}
-	
-	private static class MyVendingMachine implements VendingMachine {
-		
-		private int cents;
+/**
+ * VendingMachineImpl implements the VendingMachine interface and provides vending machine functionality.
+ */
+public class VendingMachineImpl implements VendingMachine {
+    private static VendingMachine instance = new VendingMachineImpl();
 
-        @Override
-        public void insertQuarter() {
-        	cents = cents + 25;
+    /**
+     * Get the singleton instance of the VendingMachine.
+     *
+     * @return The VendingMachine instance.
+     */
+    public static VendingMachine getInstance() {
+        return instance;
+    }
+
+    private int cents;
+
+    @Override
+    public void insertQuarter() {
+        // Insert a quarter (25 cents) into the vending machine.
+        cents += 25;
+    }
+
+    @Override
+    public Drink pressButton(String name) throws NotEnoughMoneyException, UnknownDrinkException {
+        // Get a Drink object by name from the vending machine.
+        Drink drink = getDrinkByName(name);
+
+        if (drink.getName() == null) {
+            // If the drink name is not found, throw an UnknownDrinkException.
+            throw new UnknownDrinkException();
         }
 
-        @Override
-        public Drink pressButton(String name) throws NotEnoughMoneyException, UnknownDrinkException {
-        	Drink drink = getDrinkByName(name);
-        	
-        	//Checking if the drink name returned from getDrinkByName method, is equal to the parameter 'name'
-        	if (drink.getName() == null) {
-        		throw new UnknownDrinkException();
-        	}
-        	
-        	//Checking if the price is higher than the cents introduced in the vending machine
-        	if (drink.getPrice() > cents) {
-        		throw new NotEnoughMoneyException();
-        	}
-        	
-        	//If there is no failure, I mean, if the name is correct, and the money is enough to buy the drink, 
-        	//then the drink found in the getDrinkByName method is returned
-        	
-            return drink;
+        if (drink.getPrice() > cents) {
+            // If there's not enough money to buy the selected drink, throw a NotEnoughMoneyException.
+            throw new NotEnoughMoneyException();
         }
 
-		private Drink getDrinkByName(String name) {
-			// This is replacing the call to a database
-			List<Drink> drinkList = new ArrayList<>();
-			drinkList.add(new Drink("KarenTea", false, 100));
-			drinkList.add(new Drink("ScottCola", true, 75));
-			
-			Drink drinkToReturn = new Drink();
-			
-			//Searching the name of the drink, inside the list of drinks created above. If the name is found in the list, 
-			//the drink is returned, else, an empty drink object is returned.
-			for (Drink drink : drinkList) {
-				if (drink.getName().equals(name)) {
-					return drink;
-				}
-			}
-			return drinkToReturn;
-		}
+        // Deduct the drink price from available cents.
+        cents -= drink.getPrice();
+
+        return drink;
+    }
+
+    private Drink getDrinkByName(String name) {
+        // Create a list of available drinks in the vending machine.
+        List<Drink> drinkList = new ArrayList<>();
+        drinkList.add(new Drink("KarenTea", false, 100));
+        drinkList.add(new Drink("ScottCola", true, 75));
+
+        Drink drinkToReturn = new Drink();
+
+        // Iterate through the list to find the drink with the matching name.
+        for (Drink drink : drinkList) {
+            if (drink.getName().equals(name)) {
+                return drink;
+            }
+        }
+
+        return drinkToReturn;
     }
 }
-
