@@ -19,3 +19,14 @@ swapper = None
 
 def run_swapper(list_of_tuples):
   return list(map(swapper, list_of_tuples))
+  
+  swapper = None
+def swapper(tupla):
+    # Esta función intercambia los elementos de la tupla
+    x, y = tupla
+    return (y, x)
+
+def run_swapper(list_of_tuples):
+    # Esta función aplica swapper a cada tupla en la lista
+    return list(map(swapper, list_of_tuples))
+
